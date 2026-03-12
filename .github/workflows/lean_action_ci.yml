@@ -1,4 +1,4 @@
-name: Lean Action CI
+name: Lean CI
 
 on:
   push:
@@ -11,4 +11,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v5
+
+      # Install Lean via lean-action
       - uses: leanprover/lean-action@v1
+        with:
+          # optional: specify version
+          lean-version: 4.28.0
+
+      # Install Lake (Lean build tool)
+      - name: Install Lake
+        run: lean --make lakefile.lean
+
+      # Build the project
+      - name: Build Lake project
+        run: lake build
+
+      # Optionally, run the executable
+      - name: Run executable
+        run: ./.lake/build/bin/app
