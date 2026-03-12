@@ -9,4 +9,3 @@ lean_lib IUTCorollary312Lean
 @[default_target]
 lean_exe app where
   root := `Main
-  moreLeanArgs := #["-DautoImplicit=false"]
