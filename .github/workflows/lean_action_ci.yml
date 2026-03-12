@@ -23,4 +23,4 @@ jobs:
         run: lake build
 
       - name: Run tests
-        run: lake exe my_test
+        run: lake exe app
