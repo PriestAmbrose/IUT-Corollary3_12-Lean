@@ -1,31 +1,23 @@
-name: Lean CI
+name: Lean 4 Build
 
 on:
   push:
+    branches: [ main ]
   pull_request:
-  workflow_dispatch:
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      # Install Lean via lean-action
-      - uses: leanprover/lean-action@v1
-        with:
-          # optional: specify version
-          lean-version: 4.28.0
+      - name: Install Lean 4
+        run: |
+          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y
+          echo "$HOME/.elan/bin" >> $GITHUB_PATH
 
-      # Install Lake (Lean build tool)
-      - name: Install Lake
-        run: lean --make lakefile.lean
-
-      # Build the project
-      - name: Build Lake project
+      - name: Build Lean project
         run: lake build
-
-      # Optionally, run the executable
-      - name: Run executable
-        run: ./.lake/build/bin/app
