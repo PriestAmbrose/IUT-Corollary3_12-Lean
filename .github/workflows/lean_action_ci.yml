@@ -21,3 +21,6 @@ jobs:
 
       - name: Build Lean project
         run: lake build
+
+      - name: Run tests
+        run: lake exe my_test
